@@ -11,7 +11,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // late HomeViewModel viewModel;
+  late HomeViewModel viewModel;
+  final _searchTextEditController = TextEditingController();
 
   void _updateUI() => setState(() {});
 
@@ -19,6 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     widget.viewModel.addListener(_updateUI);
+    viewModel = widget.viewModel;
+    viewModel.onSearch('서울');
   }
 
   @override
@@ -29,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final HomeViewModel viewModel = widget.viewModel;
+    // final HomeViewModel viewModel = widget.viewModel;
 
     return Scaffold(
       appBar: AppBar(
@@ -39,6 +42,22 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: _searchTextEditController,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: '검색 역',
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    viewModel.onSearch(_searchTextEditController.text);
+                  },
+                ),
+              ),
+            ),
+          ),
           Expanded(
             flex: 1,
             child: Row(
@@ -61,18 +80,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: Container(
                     color: Colors.amber,
-                    child: Column(
-                      children: [
-                        // Text('XX'), // trainLineNm (도착지방면)
-                        // Text('XX'), // barvlDt (열차도착예정시간)
-                        // Text('XX'), // btrainSttus (열차종류)
-                        Text('${viewModel.upSubway!.trainLineNm}'),
-                        // trainLineNm (도착지방면)
-                        Text('${viewModel.upSubway!.barvlDt}'),
-                        // barvlDt (열차도착예정시간)
-                        Text('${viewModel.upSubway!.btrainSttus}'),
-                        // btrainSttus (열차종류)
-                      ],
+                    child: Visibility(
+                      visible: viewModel.upSubway != null,
+                      child: Column(
+                        children: [
+                          // Text('XX'), // trainLineNm (도착지방면)
+                          // Text('XX'), // barvlDt (열차도착예정시간)
+                          // Text('XX'), // btrainSttus (열차종류)
+                          Text('${viewModel.upSubway?.trainLineNm}'),
+                          // trainLineNm (도착지방면)
+                          Text('${viewModel.upSubway?.barvlDt}'),
+                          // barvlDt (열차도착예정시간)
+                          Text('${viewModel.upSubway?.btrainSttus}'),
+                          // btrainSttus (열차종류)
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -80,17 +102,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: Container(
                     color: Colors.blue,
-                    child: Column(
-                      children: [
-                        // Text('OO'), // trainLineNm (도착지방면)
-                        // Text('OO'), // barvlDt (열차도착예정시간)
-                        // Text('OO'), // btrainSttus (열차종류)
-                        Text('${viewModel.downSubway!.trainLineNm}'),
-                        // trainLineNm (도착지방면)
-                        Text('${viewModel.downSubway!.barvlDt}'),
-                        // barvlDt (열차도착예정시간)
-                        Text('${viewModel.downSubway!.btrainSttus}'),
-                      ],
+                    child: Visibility(
+                      visible: viewModel.upSubway != null,
+                      child: Column(
+                        children: [
+                          // Text('OO'), // trainLineNm (도착지방면)
+                          // Text('OO'), // barvlDt (열차도착예정시간)
+                          // Text('OO'), // btrainSttus (열차종류)
+                          Text('${viewModel.downSubway?.trainLineNm}'),
+                          // trainLineNm (도착지방면)
+                          Text('${viewModel.downSubway?.barvlDt}'),
+                          // barvlDt (열차도착예정시간)
+                          Text('${viewModel.downSubway?.btrainSttus}'),
+                        ],
+                      ),
                     ),
                   ),
                 )

@@ -29,8 +29,8 @@ class HomeViewModel with ChangeNotifier {
       ..sort((old, now) => ((int.tryParse(now.barvlDt) ?? 0) -
           (int.tryParse(old.barvlDt) ?? 0)));
 
-    _upSubway = arrivals.firstWhere((e) => e.updnLine == '상행');
-    _downSubway = arrivals.firstWhere((e) => e.updnLine == '하행');
+    _upSubway = arrivals.any((e) => e.updnLine == '상행')? arrivals.firstWhere((e) => e.updnLine == '상행'): null;
+    _downSubway = arrivals.any((e) => e.updnLine == '하행')? arrivals.firstWhere((e) => e.updnLine == '하행'): null;
 
     changeLoadingStatus(false);
   }
