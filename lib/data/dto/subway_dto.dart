@@ -1,10 +1,16 @@
 class SubwayDto {
+  ErrorMessageDto? errorMessageDto;
+  List<RealtimeArrivalDto>? realtimeArrivalDtos;
+
   SubwayDto({
-      this.errorMessageDto, 
-      this.realtimeArrivalDtos,});
+    this.errorMessageDto,
+    this.realtimeArrivalDtos,
+  });
 
   SubwayDto.fromJson(dynamic json) {
-    errorMessageDto = json['errorMessage'] != null ? ErrorMessageDto.fromJson(json['errorMessage']) : null;
+    errorMessageDto = json['errorMessage'] != null
+        ? ErrorMessageDto.fromJson(json['errorMessage'])
+        : null;
     if (json['realtimeArrivalDtos'] != null) {
       realtimeArrivalDtos = [];
       json['realtimeArrivalDtos'].forEach((v) {
@@ -12,8 +18,6 @@ class SubwayDto {
       });
     }
   }
-  ErrorMessageDto? errorMessageDto;
-  List<RealtimeArrivalDto>? realtimeArrivalDtos;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -21,45 +25,77 @@ class SubwayDto {
       map['errorMessage'] = errorMessageDto?.toJson();
     }
     if (realtimeArrivalDtos != null) {
-      map['realtimeArrivalDtos'] = realtimeArrivalDtos?.map((v) => v.toJson()).toList();
+      map['realtimeArrivalDtos'] =
+          realtimeArrivalDtos?.map((v) => v.toJson()).toList();
     }
     return map;
   }
-
 }
 
 class RealtimeArrivalDto {
+  dynamic beginRow;
+  dynamic endRow;
+  dynamic curPage;
+  dynamic pageRow;
+  num? totalCount;
+  num? rowNum;
+  num? selectedCount;
+  String? subwayId;
+  dynamic subwayNm;
+  String? updnLine;
+  String? trainLineNm;
+  dynamic subwayHeading;
+  String? statnFid;
+  String? statnTid;
+  String? statnId;
+  String? statnNm;
+  dynamic trainCo;
+  String? trnsitCo;
+  String? ordkey;
+  String? subwayList;
+  String? statnList;
+  String? btrainSttus;
+  String? barvlDt;
+  String? btrainNo;
+  String? bstatnId;
+  String? bstatnNm;
+  String? recptnDt;
+  String? arvlMsg2;
+  String? arvlMsg3;
+  String? arvlCd;
+
   RealtimeArrivalDto({
-      this.beginRow, 
-      this.endRow, 
-      this.curPage, 
-      this.pageRow, 
-      this.totalCount, 
-      this.rowNum, 
-      this.selectedCount, 
-      this.subwayId, 
-      this.subwayNm, 
-      this.updnLine, 
-      this.trainLineNm, 
-      this.subwayHeading, 
-      this.statnFid, 
-      this.statnTid, 
-      this.statnId, 
-      this.statnNm, 
-      this.trainCo, 
-      this.trnsitCo, 
-      this.ordkey, 
-      this.subwayList, 
-      this.statnList, 
-      this.btrainSttus, 
-      this.barvlDt, 
-      this.btrainNo, 
-      this.bstatnId, 
-      this.bstatnNm, 
-      this.recptnDt, 
-      this.arvlMsg2, 
-      this.arvlMsg3, 
-      this.arvlCd,});
+    this.beginRow,
+    this.endRow,
+    this.curPage,
+    this.pageRow,
+    this.totalCount,
+    this.rowNum,
+    this.selectedCount,
+    this.subwayId,
+    this.subwayNm,
+    this.updnLine,
+    this.trainLineNm,
+    this.subwayHeading,
+    this.statnFid,
+    this.statnTid,
+    this.statnId,
+    this.statnNm,
+    this.trainCo,
+    this.trnsitCo,
+    this.ordkey,
+    this.subwayList,
+    this.statnList,
+    this.btrainSttus,
+    this.barvlDt,
+    this.btrainNo,
+    this.bstatnId,
+    this.bstatnNm,
+    this.recptnDt,
+    this.arvlMsg2,
+    this.arvlMsg3,
+    this.arvlCd,
+  });
 
   RealtimeArrivalDto.fromJson(dynamic json) {
     beginRow = json['beginRow'];
@@ -93,36 +129,6 @@ class RealtimeArrivalDto {
     arvlMsg3 = json['arvlMsg3'];
     arvlCd = json['arvlCd'];
   }
-  dynamic beginRow;
-  dynamic endRow;
-  dynamic curPage;
-  dynamic pageRow;
-  num? totalCount;
-  num? rowNum;
-  num? selectedCount;
-  String? subwayId;
-  dynamic subwayNm;
-  String? updnLine;
-  String? trainLineNm;
-  dynamic subwayHeading;
-  String? statnFid;
-  String? statnTid;
-  String? statnId;
-  String? statnNm;
-  dynamic trainCo;
-  String? trnsitCo;
-  String? ordkey;
-  String? subwayList;
-  String? statnList;
-  String? btrainSttus;
-  String? barvlDt;
-  String? btrainNo;
-  String? bstatnId;
-  String? bstatnNm;
-  String? recptnDt;
-  String? arvlMsg2;
-  String? arvlMsg3;
-  String? arvlCd;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -158,17 +164,17 @@ class RealtimeArrivalDto {
     map['arvlCd'] = arvlCd;
     return map;
   }
-
 }
 
 class ErrorMessageDto {
   ErrorMessageDto({
-      this.status, 
-      this.code, 
-      this.message, 
-      this.link, 
-      this.developerMessage, 
-      this.total,});
+    this.status,
+    this.code,
+    this.message,
+    this.link,
+    this.developerMessage,
+    this.total,
+  });
 
   ErrorMessageDto.fromJson(dynamic json) {
     status = json['status'];
@@ -178,6 +184,7 @@ class ErrorMessageDto {
     developerMessage = json['developerMessage'];
     total = json['total'];
   }
+
   num? status;
   String? code;
   String? message;
@@ -195,5 +202,4 @@ class ErrorMessageDto {
     map['total'] = total;
     return map;
   }
-
 }

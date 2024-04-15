@@ -3,7 +3,7 @@ import 'dart:convert';
 import '../dto/subway_dto.dart';
 import 'package:http/http.dart' as http;
 
-class SubwayDataSource {
+class SubwayDataSource{
   final _baseUri =
       'http://swopenapi.seoul.go.kr/api/subway/sample/json/realtimeStationArrival/0/5';
 
@@ -12,8 +12,4 @@ class SubwayDataSource {
 
     return SubwayDto.fromJson(jsonDecode(response.body));
   }
-}
-
-abstract interface clsss SubwayRepository {
-  Future<List>
 }
