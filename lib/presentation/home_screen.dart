@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_subway/presentation/arrival_data_card.dart';
 import 'package:flutter_subway/presentation/home_view_model.dart';
+import 'package:flutter_subway/presentation/train_image.dart';
 
 class HomeScreen extends StatefulWidget {
   final HomeViewModel viewModel;
@@ -66,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: Center(
                       child: Text(
-                    'Up',
+                    '상행',
                     style: TextStyle(
                         fontSize: 24,
                         color: Colors.amber,
@@ -76,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: Center(
                       child: Text(
-                    'Down',
+                    '하행',
                     style: TextStyle(
                         fontSize: 24,
                         color: Colors.blue,
@@ -94,41 +96,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 // Up
                 Expanded(
                   child: Container(
+                    constraints: BoxConstraints.expand(),
                     color: Colors.amber,
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: Visibility(
-                      visible: viewModel.upSubway != null,
-                      maintainAnimation: true,
-                      maintainSize: true,
-                      maintainState: true,
+                    child: SingleChildScrollView(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '${viewModel.upSubway?.trainLineNm}',
-                            style: const TextStyle(
-                              fontSize: 24,
-                              color: Colors.black,
-                            ),
-                          ),
-                          // trainLineNm (도착지방면)
-                          Text(
-                            '${viewModel.upSubway?.barvlDt?? 0 ~/ 60} 분 뒤 도착',
-                            style: const TextStyle(
-                              fontSize: 24,
-                              color: Colors.black,
-                            ),
-                          ),
-                          // barvlDt (열차도착예정시간)
-                          Text(
-                            '${viewModel.upSubway?.btrainSttus} 열차',
-                            style: const TextStyle(
-                              fontSize: 24,
-                              color: Colors.black,
-                            ),
-                          ),
-                          // btrainSttus (열차종류)
-                        ],
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: viewModel.upSubway
+                            .map((e) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ArrivalDataCard(e),
+                            )).toList(),
                       ),
                     ),
                   ),
@@ -136,40 +114,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 // Down
                 Expanded(
                   child: Container(
+                    constraints: BoxConstraints.expand(),
                     color: Colors.blue,
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: Visibility(
-                      visible: viewModel.downSubway != null,
-                      maintainAnimation: true,
-                      maintainSize: true,
-                      maintainState: true,
+                    child: SingleChildScrollView(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '${viewModel.downSubway?.trainLineNm}',
-                            style: const TextStyle(
-                              fontSize: 24,
-                              color: Colors.black,
-                            ),
-                          ),
-                          // trainLineNm (도착지방면)
-                          Text(
-                            '${viewModel.downSubway?.barvlDt?? 0 ~/ 60} 분 뒤 도착',
-                            style: const TextStyle(
-                              fontSize: 24,
-                              color: Colors.black,
-                            ),
-                          ),
-                          // barvlDt (열차도착예정시간)
-                          Text(
-                            '${viewModel.downSubway?.btrainSttus} 열차',
-                            style: const TextStyle(
-                              fontSize: 24,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: viewModel.downSubway
+                            .map((e) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ArrivalDataCard(e),
+                            )).toList(),
                       ),
                     ),
                   ),
@@ -180,43 +135,12 @@ class _HomeScreenState extends State<HomeScreen> {
           Stack(
             alignment: Alignment.center,
             children: [
-              const Divider(
-                height: 150,
-                thickness: 10,
-                color: Colors.grey,
-              ),
-              Positioned(
-                left: (MediaQuery.of(context).size.width / 2) -
-                    ((int.tryParse(viewModel.upSubway?.barvlDt ?? '0')) ??
-                        0 / 180) -
-                    _trainWidth -
-                    _trainWidth / 2 + 16,
-                child: Visibility(
-                  visible: viewModel.upSubway != null,
-                  maintainAnimation: true,
-                  maintainSize: true,
-                  maintainState: true,
-                  child: Image.asset(
-                    'assets/train_left.png',
-                    width: _trainWidth,
-                    height: _trainWidth / 1.5,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: (MediaQuery.of(context).size.width / 2) +
-                    ((int.tryParse(viewModel.upSubway?.barvlDt ?? '0')) ??
-                        0 / 180) + _trainWidth / 2 - 16,
-                child: Visibility(
-                  visible: viewModel.downSubway != null,
-                  maintainAnimation: true,
-                  maintainSize: true,
-                  maintainState: true,
-                  child: Image.asset(
-                    'assets/train_right.png',
-                    width: _trainWidth,
-                    height: _trainWidth / 1.5,
-                  ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                child: const Divider(
+                  height: 100,
+                  thickness: 10,
+                  color: Colors.grey,
                 ),
               ),
               Padding(
@@ -225,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: _trainWidth,
                   height: 50,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(30),
                       color: Colors.white,
                       border: Border.all(
                         width: 5,
@@ -238,12 +162,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   )),
                 ),
               ),
+              ... viewModel.upSubway.map((e) => TrainImageLeft(e, _trainWidth)),
+              ... viewModel.downSubway.map((e) => TrainImageRight(e, _trainWidth)),
             ],
           )
         ],
       ),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 96),
+        padding: const EdgeInsets.only(bottom: 140),
         child: FloatingActionButton(
           onPressed: () {
             viewModel.onSearch(_searchTextEditController.text);

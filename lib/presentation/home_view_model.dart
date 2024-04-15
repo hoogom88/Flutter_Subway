@@ -15,12 +15,12 @@ class HomeViewModel with ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-  RealtimeArrival? _upSubway;
-  RealtimeArrival? _downSubway;
+  List<RealtimeArrival> _upSubway = [];
+  List<RealtimeArrival> _downSubway = [];
 
-  RealtimeArrival? get upSubway => _upSubway;
+  List<RealtimeArrival> get upSubway => _upSubway;
 
-  RealtimeArrival? get downSubway => _downSubway;
+  List<RealtimeArrival> get downSubway => _downSubway;
 
   Future<void> onSearch(String key) async {
     _station = key;
@@ -33,12 +33,8 @@ class HomeViewModel with ChangeNotifier {
       ..sort((now, old) => ((int.tryParse(now.barvlDt) ?? 0) -
           (int.tryParse(old.barvlDt) ?? 0)));
 
-    _upSubway = arrivals.any((e) => e.updnLine == '상행')
-        ? arrivals.firstWhere((e) => e.updnLine == '상행')
-        : null;
-    _downSubway = arrivals.any((e) => e.updnLine == '하행')
-        ? arrivals.firstWhere((e) => e.updnLine == '하행')
-        : null;
+    _upSubway = arrivals.where((e) => e.updnLine == '상행').take(3).toList();
+    _downSubway = arrivals.where((e) => e.updnLine == '하행').take(3).toList();
     print(_upSubway);
     print(_downSubway);
 
