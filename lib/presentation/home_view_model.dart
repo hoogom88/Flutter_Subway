@@ -30,7 +30,7 @@ class HomeViewModel with ChangeNotifier {
         await _repository.getRealtimeArrivalList(key);
 
     final arrivals = result
-      ..sort((old, now) => ((int.tryParse(now.barvlDt) ?? 0) -
+      ..sort((now, old) => ((int.tryParse(now.barvlDt) ?? 0) -
           (int.tryParse(old.barvlDt) ?? 0)));
 
     _upSubway = arrivals.any((e) => e.updnLine == '상행')
