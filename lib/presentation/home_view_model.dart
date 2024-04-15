@@ -26,11 +26,9 @@ class HomeViewModel with ChangeNotifier {
         await _repository.getRealtimeArrivalList(key);
 
     final arrivals = result
-        .where((e) => e.arvlCd == '0' && e.arvlCd == '3')
-        .toList();
-    arrivals.sort((old, now) =>
-        ((int.tryParse(now.barvlDt) ?? 0) - (int.tryParse(old.barvlDt) ?? 0)));
-    
+      ..sort((old, now) => ((int.tryParse(now.barvlDt) ?? 0) -
+          (int.tryParse(old.barvlDt) ?? 0)));
+
     _upSubway = arrivals.firstWhere((e) => e.updnLine == '상행');
     _downSubway = arrivals.firstWhere((e) => e.updnLine == '하행');
 
