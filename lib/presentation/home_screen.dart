@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_subway/presentation/home_view_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _trainWidth = 80.0;
   late HomeViewModel viewModel;
   final _searchTextEditController = TextEditingController();
 
@@ -137,17 +140,56 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Stack(
-            alignment: Alignment.bottomCenter,
+            alignment: Alignment.center,
             children: [
-              Image.asset(
-                'assets/train_left.png',
-                width: 100,
-                height: 100,
+              Divider(
+                thickness: 10,
+
+                color: Colors.grey,
               ),
-              Image.asset(
-                'assets/train_right.png',
-                width: 100,
-                height: 100,
+              Positioned(
+                left: (MediaQuery.of(context).size.width / 2) - ((int.tryParse(viewModel.upSubway?.barvlDt?? '0') ) ?? 0 / 180) - _trainWidth - _trainWidth / 2,
+                child: Visibility(
+                  visible: viewModel.upSubway != null,
+                  maintainAnimation: true,
+                  maintainSize: true,
+                  maintainState: true,
+                  child: Image.asset(
+                    'assets/train_left.png',
+                    width: _trainWidth,
+                    height: _trainWidth,
+                  ),
+                ),
+              ),
+              Positioned(
+                left: (MediaQuery.of(context).size.width / 2) + ((int.tryParse(viewModel.upSubway?.barvlDt?? '0') ) ?? 0 / 180),
+                child: Visibility(
+                  visible: viewModel.downSubway != null,
+                  maintainAnimation: true,
+                  maintainSize: true,
+                  maintainState: true,
+                  child: Image.asset(
+                    'assets/train_right.png',
+                    width: _trainWidth,
+                    height: _trainWidth,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: _trainWidth,
+                  height: _trainWidth,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    border: Border.all(
+                      width: 5,
+                      color: Colors.red,
+                    )
+                  ),
+                  child: Center(child: Text('${viewModel.station}역', style: TextStyle(fontSize: 20),)),
+                ),
               ),
             ],
           )

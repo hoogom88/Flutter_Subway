@@ -8,6 +8,9 @@ class HomeViewModel with ChangeNotifier {
 
   HomeViewModel({required repository}) : _repository = repository;
 
+  String _station = '';
+
+  String get station => _station;
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
@@ -20,6 +23,7 @@ class HomeViewModel with ChangeNotifier {
   RealtimeArrival? get downSubway => _downSubway;
 
   Future<void> onSearch(String key) async {
+    _station = key;
     changeLoadingStatus(true);
 
     List<RealtimeArrival> result =
@@ -29,8 +33,14 @@ class HomeViewModel with ChangeNotifier {
       ..sort((old, now) => ((int.tryParse(now.barvlDt) ?? 0) -
           (int.tryParse(old.barvlDt) ?? 0)));
 
-    _upSubway = arrivals.any((e) => e.updnLine == '상행')? arrivals.firstWhere((e) => e.updnLine == '상행'): null;
-    _downSubway = arrivals.any((e) => e.updnLine == '하행')? arrivals.firstWhere((e) => e.updnLine == '하행'): null;
+    _upSubway = arrivals.any((e) => e.updnLine == '상행')
+        ? arrivals.firstWhere((e) => e.updnLine == '상행')
+        : null;
+    _downSubway = arrivals.any((e) => e.updnLine == '하행')
+        ? arrivals.firstWhere((e) => e.updnLine == '하행')
+        : null;
+    print(_upSubway);
+    print(_downSubway);
 
     changeLoadingStatus(false);
   }
