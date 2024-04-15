@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Container(
                     color: Colors.blue,
                     child: Visibility(
-                      visible: viewModel.upSubway != null,
+                      visible: viewModel.downSubway != null,
                       child: Column(
                         children: [
                           // Text('OO'), // trainLineNm (도착지방면)

@@ -11,9 +11,9 @@ class SubwayDto {
     errorMessageDto = json['errorMessage'] != null
         ? ErrorMessageDto.fromJson(json['errorMessage'])
         : null;
-    if (json['realtimeArrivalDtos'] != null) {
+    if (json['realtimeArrivalList'] != null) {
       realtimeArrivalDtos = [];
-      json['realtimeArrivalDtos'].forEach((v) {
+      json['realtimeArrivalList'].forEach((v) {
         realtimeArrivalDtos?.add(RealtimeArrivalDto.fromJson(v));
       });
     }
@@ -25,7 +25,7 @@ class SubwayDto {
       map['errorMessage'] = errorMessageDto?.toJson();
     }
     if (realtimeArrivalDtos != null) {
-      map['realtimeArrivalDtos'] =
+      map['realtimeArrivalList'] =
           realtimeArrivalDtos?.map((v) => v.toJson()).toList();
     }
     return map;
