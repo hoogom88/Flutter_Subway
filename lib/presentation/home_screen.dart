@@ -58,15 +58,23 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          Expanded(
-            flex: 1,
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 16),
             child: Row(
               children: [
                 Expanded(
-                  child: Center(child: Text('Up')),
+                  child: Center(
+                      child: Text(
+                    'Up',
+                    style: TextStyle(fontSize: 16),
+                  )),
                 ),
                 Expanded(
-                  child: Center(child: Text('Down')),
+                  child: Center(
+                      child: Text(
+                    'Down',
+                    style: TextStyle(fontSize: 16),
+                  )),
                 ),
               ],
             ),
@@ -82,6 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.amber,
                     child: Visibility(
                       visible: viewModel.upSubway != null,
+                      maintainAnimation: true,
+                      maintainSize: true,
+                      maintainState: true,
                       child: Column(
                         children: [
                           // Text('XX'), // trainLineNm (도착지방면)
@@ -104,6 +115,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.blue,
                     child: Visibility(
                       visible: viewModel.downSubway != null,
+                      maintainAnimation: true,
+                      maintainSize: true,
+                      maintainState: true,
                       child: Column(
                         children: [
                           // Text('OO'), // trainLineNm (도착지방면)
@@ -123,7 +137,19 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Stack(
-            children: [],
+            alignment: Alignment.bottomCenter,
+            children: [
+              Image.asset(
+                'assets/train_left.png',
+                width: 100,
+                height: 100,
+              ),
+              Image.asset(
+                'assets/train_right.png',
+                width: 100,
+                height: 100,
+              ),
+            ],
           )
         ],
       ),
