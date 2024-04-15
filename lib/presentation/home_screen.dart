@@ -102,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       maintainSize: true,
                       maintainState: true,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             '${viewModel.upSubway?.trainLineNm}',
@@ -112,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           // trainLineNm (도착지방면)
                           Text(
-                            '${viewModel.upSubway?.barvlDt}',
+                            '${viewModel.upSubway?.barvlDt?? 0 ~/ 60} 분 뒤 도착',
                             style: const TextStyle(
                               fontSize: 24,
                               color: Colors.black,
@@ -120,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           // barvlDt (열차도착예정시간)
                           Text(
-                            '${viewModel.upSubway?.btrainSttus}',
+                            '${viewModel.upSubway?.btrainSttus} 열차',
                             style: const TextStyle(
                               fontSize: 24,
                               color: Colors.black,
@@ -143,6 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       maintainSize: true,
                       maintainState: true,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             '${viewModel.downSubway?.trainLineNm}',
@@ -153,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           // trainLineNm (도착지방면)
                           Text(
-                            '${viewModel.downSubway?.barvlDt}',
+                            '${viewModel.downSubway?.barvlDt?? 0 ~/ 60} 분 뒤 도착',
                             style: const TextStyle(
                               fontSize: 24,
                               color: Colors.black,
@@ -161,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           // barvlDt (열차도착예정시간)
                           Text(
-                            '${viewModel.downSubway?.btrainSttus}',
+                            '${viewModel.downSubway?.btrainSttus} 열차',
                             style: const TextStyle(
                               fontSize: 24,
                               color: Colors.black,
@@ -179,6 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
             alignment: Alignment.center,
             children: [
               const Divider(
+                height: 150,
                 thickness: 10,
                 color: Colors.grey,
               ),
@@ -187,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ((int.tryParse(viewModel.upSubway?.barvlDt ?? '0')) ??
                         0 / 180) -
                     _trainWidth -
-                    _trainWidth / 2,
+                    _trainWidth / 2 + 16,
                 child: Visibility(
                   visible: viewModel.upSubway != null,
                   maintainAnimation: true,
@@ -196,14 +199,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Image.asset(
                     'assets/train_left.png',
                     width: _trainWidth,
-                    height: _trainWidth,
+                    height: _trainWidth / 1.5,
                   ),
                 ),
               ),
               Positioned(
                 left: (MediaQuery.of(context).size.width / 2) +
                     ((int.tryParse(viewModel.upSubway?.barvlDt ?? '0')) ??
-                        0 / 180),
+                        0 / 180) + _trainWidth / 2 - 16,
                 child: Visibility(
                   visible: viewModel.downSubway != null,
                   maintainAnimation: true,
@@ -212,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Image.asset(
                     'assets/train_right.png',
                     width: _trainWidth,
-                    height: _trainWidth,
+                    height: _trainWidth / 1.5,
                   ),
                 ),
               ),
@@ -220,18 +223,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   width: _trainWidth,
-                  height: _trainWidth,
+                  height: 50,
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle,
+                    borderRadius: BorderRadius.circular(30),
                       color: Colors.white,
                       border: Border.all(
                         width: 5,
-                        color: Colors.red,
+                        color: Colors.black,
                       )),
                   child: Center(
                       child: Text(
                     '${viewModel.station}역',
-                    style: const TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 15),
                   )),
                 ),
               ),
